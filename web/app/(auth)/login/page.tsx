@@ -1,8 +1,38 @@
+'use client'
+
+import { useSearchParams } from 'next/navigation'
+import { signIn } from 'next-auth/react'
+import { SubmitHandler, FieldValues } from 'react-hook-form'
+
 import AuthCard from '@/components/auth/AuthCard'
 import LoginForm from '@/components/auth/LoginForm'
 import SocialAuthButtons from '@/components/auth/SocialAuthButtons'
 
 export default function LoginPage() {
+  const searchParams = useSearchParams()
+  const callbackUrl = searchParams.get('from') || '/dashboard'
+
+  // Handles social login
+  const socialAction = (provider: 'github' | 'google') => {
+    signIn(provider, { callbackUrl })
+  }
+
+  // Handles credential-based login
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const result = await signIn('credentials', {
+      ...data,
+      redirect: false,
+      callbackUrl,
+    })
+
+    if (result?.error) {
+      console.error('Login failed:', result.error)
+      // Show an error toast or message here
+    } else if (result?.ok) {
+      window.location.href = callbackUrl
+    }
+  }
+
   return (
     <AuthCard
       title="Sign in to your account"
@@ -32,5 +62,5 @@ export default function LoginPage() {
         </a>
       </div>
     </AuthCard>
-  )
+  )
 }

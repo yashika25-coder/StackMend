@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode } from 'react' 
 
 interface ButtonProps {
   children: ReactNode
@@ -7,6 +7,8 @@ interface ButtonProps {
   onClick?: () => void
   fullWidth?: boolean
   outline?: boolean
+  isLoading?: boolean
+  variant?: 'primary' | 'secondary' | 'danger'
 }
 
 export default function Button({

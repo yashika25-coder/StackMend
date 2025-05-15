@@ -1,9 +1,12 @@
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
 
 interface InputProps {
+  value : string 
   id: string
   label: string
   type?: string
+  onChange: (e: any) => void
+  placeholder: string
   disabled?: boolean
   required?: boolean
   register: UseFormRegister<FieldValues>

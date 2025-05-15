@@ -1,4 +1,6 @@
 import Image from 'next/image'
+import { ErrorSubmissionPage } from '@/components/errors/ErrorSubmissionPage';
+
 
 export default function Home() {
   return (
